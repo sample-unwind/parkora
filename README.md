@@ -32,6 +32,24 @@ Parkora je inovativna aplikacija, ki voznikom omogoča pregled prostih parkirnih
 - Priljubljena parkirišča: Označevanje in hiter dostop do pogostih lokacij.
 - Scraper: Samodejno pridobivanje podatkov iz zunanjih virov.
 
+## Razvoj in Veje
+
+### Strategija vej
+- `main`: Produkcijska veja, ki vsebuje stabilno kodo za izdajo.
+- `dev`: Razvojna veja za integracijo novih funkcij in testiranje.
+
+### Navodila za razvoj
+1. Začne z vejo `dev` za večino razvoja.
+2. Za nove funkcionalnosti ustvari vejo `feature/<ime-funkcionalnosti>` iz `dev`.
+3. Po dokončanju funkcionalnosti ustvari pull request (PR) iz `feature/<ime>` v `dev`.
+4. Ko je `dev` stabilen in testiran, ustvari PR iz `dev` v `main` za izdajo.
+5. Veja `main` mora biti vedno stabilna in pripravljena za produkcijo.
+
+### Začetek dela
+- Kloniraj repozitorij: `git clone <url>`
+- Preklopi na dev: `git checkout dev`
+- Ustvari novo vejo za funkcionalnost: `git checkout -b feature/ime-funkcionalnosti`
+
 ## Primer uporabe
 
 Študent želi rezervirati parkirno mesto blizu fakultete. Ustvari račun, poišče primerno parkirišče, preveri zasedenost in ceno, rezervira mesto za želeni termin, plača digitalno ter doda lokacijo med priljubljene za hitrejši dostop v prihodnje.
