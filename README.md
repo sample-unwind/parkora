@@ -32,6 +32,10 @@ Parkora je inovativna aplikacija, ki voznikom omogoča pregled prostih parkirnih
 - Priljubljena parkirišča: Označevanje in hiter dostop do pogostih lokacij.
 - Scraper: Samodejno pridobivanje podatkov iz zunanjih virov.
 
+## CI/CD
+
+Vsaka mikrostoritev ima lasten cevovod GitHub Actions za avtomatizirano kontinuirano integracijo in uvajanje. Cevovodi obravnavajo linting, testiranje, gradnjo Docker slik in uvajanje v Kubernetes. Podrobnosti so specifične za vsako storitev in dokumentirane v njihovih README datotekah.
+
 ## Razvoj in Veje
 
 ### Strategija vej
