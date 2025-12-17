@@ -35,7 +35,7 @@ Parkora je inovativna aplikacija, ki voznikom omogoča pregled prostih parkirnih
 ## Razvoj in Veje
 
 ### Strategija vej
-- `main`: Produkcijska veja, ki vsebuje stabilno kodo za izdajo.
+- `main` ali `master`: Produkcijska veja, ki vsebuje stabilno kodo za izdajo.
 - `dev`: Razvojna veja za integracijo novih funkcij in testiranje.
 
 ### Navodila za razvoj
