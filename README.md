@@ -22,6 +22,21 @@ Parkora je inovativna aplikacija, ki voznikom omogoča pregled prostih parkirnih
 - **Logging**: EFK Stack
 - **CI/CD**: GitHub Actions
 
+## Azure Key Vault
+
+Projekt uporablja en skupen Azure Key Vault z ločenimi skrivnostmi per mikrostoritev. Naming convention:
+
+| Mikrostoritev | Primer skrivnosti |
+|---------------|-------------------|
+| user-service | `user-service-db-password`, `user-service-jwt-secret` |
+| parking-service | `parking-service-db-password`, `parking-service-weather-api-key` |
+| reservation-service | `reservation-service-db-password` |
+| payment-service | `payment-service-db-password`, `payment-service-grpc-cert` |
+| notification-service | `notification-service-rabbitmq-password` |
+| scraper-service | `scraper-service-db-password` |
+
+Dostop do skrivnosti v K8s poteka preko Azure Key Vault CSI Driver (SecretProviderClass).
+
 ## Mikrostoritve
 
 - Avtentikacija: Varno prijava in registracija uporabnikov.
