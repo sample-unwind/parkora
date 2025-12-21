@@ -16,7 +16,7 @@ Parkora je inovativna aplikacija, ki voznikom omogoča pregled prostih parkirnih
 - **Frontend**: Svelte, Tailwind CSS
 - **Podatkovna baza**: PostgreSQL
 - **Deployment**: Docker, Kubernetes
-- **Infrastruktura**: Azure (Terraform, AKS, ACR, Kong API Gateway)
+- **Infrastruktura**: Azure (Terraform, AKS, GHCR, Kong API Gateway)
 - **Avtentikacija**: Keycloak
 - **Monitoring**: Prometheus, Grafana
 - **Logging**: EFK Stack
@@ -36,6 +36,21 @@ Projekt uporablja en skupen Azure Key Vault z ločenimi skrivnostmi per mikrosto
 | scraper-service | `scraper-service-db-password` |
 
 Dostop do skrivnosti v K8s poteka preko Azure Key Vault CSI Driver (SecretProviderClass).
+
+## Container Registry (GHCR)
+
+Projekt uporablja **GitHub Container Registry (ghcr.io)** za shranjevanje Docker slik.
+
+| Servis | Image URL |
+|--------|-----------|
+| user-service | `ghcr.io/sample-unwind/user-service` |
+| parking-service | `ghcr.io/sample-unwind/parking-service` |
+| reservation-service | `ghcr.io/sample-unwind/reservation-service` |
+| payment-service | `ghcr.io/sample-unwind/payment-service` |
+| notification-service | `ghcr.io/sample-unwind/notification-service` |
+| scraper-service | `ghcr.io/sample-unwind/scraper-service` |
+
+Podrobnosti o infrastrukturi in Key Vault uporabi so v [core_infra repozitoriju](https://github.com/sample-unwind/core_infra).
 
 ## Mikrostoritve
 
