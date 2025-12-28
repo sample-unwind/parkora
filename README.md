@@ -41,14 +41,15 @@ Dostop do skrivnosti v K8s poteka preko Azure Key Vault CSI Driver (SecretProvid
 
 Projekt uporablja **GitHub Container Registry (ghcr.io)** za shranjevanje Docker slik.
 
-| Servis | Image URL |
-|--------|-----------|
-| user-service | `ghcr.io/sample-unwind/user-service` |
-| parking-service | `ghcr.io/sample-unwind/parking-service` |
-| reservation-service | `ghcr.io/sample-unwind/reservation-service` |
-| payment-service | `ghcr.io/sample-unwind/payment-service` |
-| notification-service | `ghcr.io/sample-unwind/notification-service` |
-| scraper-service | `ghcr.io/sample-unwind/scraper-service` |
+| Servis | Image URL | Status |
+|--------|-----------|--------|
+| frontend | `ghcr.io/sample-unwind/frontend` | Deployed |
+| user-service | `ghcr.io/sample-unwind/user-service` | Pending |
+| parking-service | `ghcr.io/sample-unwind/parking-service` | Pending |
+| reservation-service | `ghcr.io/sample-unwind/reservation-service` | Pending |
+| payment-service | `ghcr.io/sample-unwind/payment-service` | Pending |
+| notification-service | `ghcr.io/sample-unwind/notification-service` | Pending |
+| scraper-service | `ghcr.io/sample-unwind/scraper-service` | Pending |
 
 Podrobnosti o infrastrukturi in Key Vault uporabi so v [core_infra repozitoriju](https://github.com/sample-unwind/core_infra).
 
