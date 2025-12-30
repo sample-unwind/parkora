@@ -18,8 +18,8 @@ Parkora je inovativna aplikacija, ki voznikom omogoča pregled prostih parkirnih
 - **Deployment**: Docker, Kubernetes
 - **Infrastruktura**: Azure (Terraform, AKS, GHCR, Kong API Gateway)
 - **Avtentikacija**: Keycloak
-- **Monitoring**: Prometheus, Grafana
-- **Logging**: EFK Stack
+- **Monitoring**: Prometheus, Grafana, Alertmanager
+- **Logging**: Elasticsearch, Filebeat, Kibana (EFK Stack)
 - **CI/CD**: GitHub Actions
 
 ## Azure Key Vault
@@ -37,15 +37,23 @@ Projekt uporablja en skupen Azure Key Vault z ločenimi skrivnostmi per mikrosto
 
 Dostop do skrivnosti v K8s poteka preko Azure Key Vault CSI Driver (SecretProviderClass).
 
+## Monitoring & Logging Access
+
+| Service | URL | Credentials |
+|---------|-----|-------------|
+| **Grafana** | https://grafana.parkora.crn.si/ | admin / admin |
+| **Kibana** | https://kibana.parkora.crn.si/ | elastic / NILXDRm5Em3FOFOG |
+| **Prometheus** | Internal access via Grafana | N/A |
+
 ## Container Registry (GHCR)
 
 Projekt uporablja **GitHub Container Registry (ghcr.io)** za shranjevanje Docker slik.
 
 | Servis | Image URL | Status |
 |--------|-----------|--------|
-| frontend | `ghcr.io/sample-unwind/frontend` | Deployed |
+| frontend | `ghcr.io/sample-unwind/frontend` | ✅ Deployed |
 | user-service | `ghcr.io/sample-unwind/user-service` | Pending |
-| parking-service | `ghcr.io/sample-unwind/parking-service` | Pending |
+| parking-service | `ghcr.io/sample-unwind/parking-service` | ✅ Deployed |
 | reservation-service | `ghcr.io/sample-unwind/reservation-service` | Pending |
 | payment-service | `ghcr.io/sample-unwind/payment-service` | Pending |
 | notification-service | `ghcr.io/sample-unwind/notification-service` | Pending |
@@ -84,6 +92,15 @@ Vsaka mikrostoritev ima lasten cevovod GitHub Actions za avtomatizirano kontinui
 - Kloniraj repozitorij: `git clone <url>`
 - Preklopi na dev: `git checkout dev`
 - Ustvari novo vejo za funkcionalnost: `git checkout -b feature/ime-funkcionalnosti`
+
+## Monitoring Features
+
+- **Real-time Metrics**: CPU, memory, network usage across all services
+- **Log Aggregation**: Centralized logging with searchable dashboards
+- **Service Health**: Pod status, restarts, and error tracking
+- **API Monitoring**: Request rates, response times, error rates
+- **Alerting**: Configurable alerts for critical issues
+- **Visualizations**: Pre-built dashboards for Kubernetes and application metrics
 
 ## Primer uporabe
 
