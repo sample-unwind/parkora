@@ -52,24 +52,73 @@ Projekt uporablja **GitHub Container Registry (ghcr.io)** za shranjevanje Docker
 | Servis | Image URL | Status |
 |--------|-----------|--------|
 | frontend | `ghcr.io/sample-unwind/frontend` | ✅ Deployed |
-| user-service | `ghcr.io/sample-unwind/user-service` | Pending |
+| user-service | `ghcr.io/sample-unwind/user-service` | ✅ Deployed |
 | parking-service | `ghcr.io/sample-unwind/parking-service` | ✅ Deployed |
-| reservation-service | `ghcr.io/sample-unwind/reservation-service` | Pending |
-| payment-service | `ghcr.io/sample-unwind/payment-service` | Pending |
+| reservation-service | `ghcr.io/sample-unwind/reservation-service` | ✅ Deployed |
+| payment-service | `ghcr.io/sample-unwind/payment-service` | ✅ Deployed |
 | notification-service | `ghcr.io/sample-unwind/notification-service` | Pending |
 | scraper-service | `ghcr.io/sample-unwind/scraper-service` | Pending |
 
 Podrobnosti o infrastrukturi in Key Vault uporabi so v [core_infra repozitoriju](https://github.com/sample-unwind/core_infra).
 
+## Multitenancy (PostgreSQL RLS)
+
+Projekt implementira večnajemništvo (multitenancy) z uporabo PostgreSQL Row-Level Security (RLS) za GDPR compliance.
+
+### Implementirani servisi
+
+| Servis | Status | Commit |
+|--------|--------|--------|
+| user-service | ✅ Implementirano | `a2e7d31` |
+| reservation-service | ✅ Implementirano | `b72b3fb` |
+
+### Uporaba
+
+Vse GraphQL poizvedbe in mutacije zahtevajo header `X-Tenant-ID`:
+
+```bash
+# S tenant headerjem - vrne podatke
+curl -X POST https://parkora.crn.si/api/v1/user/graphql \
+    -H "Content-Type: application/json" \
+    -H "X-Tenant-ID: 00000000-0000-0000-0000-000000000001" \
+    -d '{"query": "{ users { id email } }"}'
+
+# Brez tenant headerja - vrne prazen rezultat (strict mode)
+curl -X POST https://parkora.crn.si/api/v1/user/graphql \
+    -H "Content-Type: application/json" \
+    -d '{"query": "{ users { id email } }"}'
+```
+
+### Tehnična implementacija
+
+- **RLS Policy**: Vsaka tabela ima `tenant_id` stolpec in RLS policy
+- **Strict mode**: Brez veljavnega tenant headerja API vrne prazne rezultate (ne napako)
+- **Per-tenant uniqueness**: Email in Keycloak ID sta unikatna znotraj tenanta, ne globalno
+- **Session variable**: API nastavi `app.tenant_id` PostgreSQL session variable iz headerja
+
+## API Endpoints
+
+| Servis | URL | Tip |
+|--------|-----|-----|
+| Frontend | https://parkora.crn.si/ | Web UI |
+| Parking API | https://parkora.crn.si/api/v1/parking/ | REST |
+| User API | https://parkora.crn.si/api/v1/user/graphql | GraphQL |
+| Reservation API | https://parkora.crn.si/api/v1/reservation/graphql | GraphQL |
+| Payment API | https://parkora.crn.si/api/v1/payment/ | REST |
+| Keycloak | https://keycloak.parkora.crn.si/auth/ | OAuth2/OIDC |
+
 ## Mikrostoritve
 
-- Avtentikacija: Varno prijava in registracija uporabnikov.
-- Uporabniki: Upravljanje profilov in osebnih podatkov.
-- Pregled parkirišč: Realnočasni pregled zasedenosti, cen in lokacij.
-- Rezervacije: Rezervacija in pregled aktivnih rezervacij.
-- Plačila: Hitro in varno plačevanje parkirnin.
-- Priljubljena parkirišča: Označevanje in hiter dostop do pogostih lokacij.
-- Scraper: Samodejno pridobivanje podatkov iz zunanjih virov.
+| Servis | Opis | Tehnologija | Status |
+|--------|------|-------------|--------|
+| **user-service** | Upravljanje uporabniških profilov | Python/FastAPI + Strawberry GraphQL | ✅ Deployed |
+| **parking-service** | Pregled parkirišč in zasedenosti | Go 1.22 (net/http) | ✅ Deployed |
+| **reservation-service** | Rezervacije parkirnih mest | Python/FastAPI + Strawberry GraphQL | ✅ Deployed |
+| **payment-service** | Obdelava plačil | Python/FastAPI | ✅ Deployed |
+| **notification-service** | Obveščanje uporabnikov (RabbitMQ) | Python/FastAPI | Pending |
+| **scraper-service** | Pridobivanje podatkov iz zunanjih virov | Node.js | Pending |
+
+Avtentikacija je implementirana z zunanjo storitvijo **Keycloak** (OAuth2/OIDC).
 
 ## CI/CD
 
