@@ -6,7 +6,7 @@ Parkora je inovativna aplikacija, ki voznikom omogoča pregled prostih parkirnih
 
 ## Člani skupine
 
-- Šane Bucan (63220036)
+- Žane Bucan (63220036)
 - Stjepan Sazonov (63220288)
 - Gregor Bucar (63220037)
 
